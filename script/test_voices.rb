@@ -1,3 +1,5 @@
+# Encoding: UTF-8
+
 SAMPLE_SENTENCES = {
   :ar      =>  "اسمي {name} وأنا أتكلم يمكن.", # Arabic (Saudi Arabia)
   :ca      =>  "El meu nom és {name} i que pot parlar.", # Catalan (Spain)

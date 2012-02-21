@@ -88,7 +88,7 @@ module Acapela
         if speakers.empty?
           nil
         else
-          named_voice(speakers.choice)
+          named_voice(speakers.sample)
         end
       end
     end

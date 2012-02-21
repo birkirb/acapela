@@ -41,7 +41,7 @@ describe Acapela::Voice do
         voice.speaker.should == 'Tracy'
         voice.language.should == 'en'
         voice.gender.should == Acapela::Voice::GENDER_FEMALE
-        voice.languages.should == Set.new('en')
+        voice.languages.to_a.should == ['en']
         voice.id.should == 'tracy22k'
       end
 

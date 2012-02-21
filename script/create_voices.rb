@@ -1,7 +1,7 @@
 require 'net/http'
 require 'set'
 require 'fileutils'
-require 'lib/acapela/constants'
+require 'acapela/constants'
 
 include Acapela::Scripts
 

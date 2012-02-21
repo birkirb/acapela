@@ -1,6 +1,8 @@
+#!/usr/bin/env ruby
+
 require 'rake'
 require 'rspec/core/rake_task'
-require 'lib/acapela/constants'
+require 'acapela/constants'
 
 RSpec::Core::RakeTask.new(:spec)
 

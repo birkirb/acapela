@@ -6,6 +6,10 @@ require 'acapela/constants'
 require 'acapela/response'
 require 'acapela/voice_service'
 
+if RUBY_VERSION < "1.9"
+  require 'backports'
+end
+
 module Acapela
 
   @@config = Acapela::Config.read rescue nil
