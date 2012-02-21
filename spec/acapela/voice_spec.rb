@@ -3,7 +3,6 @@ require 'spec_helper'
 describe Acapela::Voice do
 
   context 'When created' do
-
     speaker_name = 'tom'
     test_voice = Acapela::Voice.new(speaker_name, Acapela::Voice::GENDER_FEMALE)
 
@@ -23,15 +22,17 @@ describe Acapela::Voice do
       test_voice.high_quality!
       test_voice.quality.should == Acapela::Voice::QUALITY_HIGH
     end
-
   end
 
   context 'With a set of defined voices' do
-
     it 'should throw an error if the voice does not exist' do
       expect do
         Acapela::Voice.named_voice('Birkir')
       end.to raise_error(Acapela::Error, "Voice does not exist.")
+    end
+
+    it 'should return the active voice map' do
+      Acapela::Voice.map.should == Acapela::Voices::PER_LANGUAGE
     end
 
     context 'should find a voice' do
@@ -60,9 +61,8 @@ describe Acapela::Voice do
     end
 
     context 'should extract a voice when given an option that' do
-
       it 'specifies nothing, defaulting to English' do
-        voice = Acapela::Voice.extract_from_options(:language => :en)
+        voice = Acapela::Voice.extract_from_options
         ['Tracy', 'Heather', 'Kenny'].should include(voice.speaker)
       end
 
@@ -92,7 +92,37 @@ describe Acapela::Voice do
         voice.should be_nil
       end
     end
-
   end
 
+  context 'Allows for voices to be overriden or changed' do
+    after(:each) do
+      Acapela::Voice.reset_map
+    end
+
+    it 'should allow removing specific entries' do
+      Acapela::Voice.map[:en][:male].first.should == 'Kenny'
+      Acapela::Voice.override_map(:en => nil)
+      Acapela::Voice.map[:en].should be_nil
+    end
+
+    it 'should allow mapping one entry to another' do
+      Acapela::Voice.map[:en][:male].first.should == 'Kenny'
+      Acapela::Voice.override_map(:en => :fr)
+      Acapela::Voice.map[:en][:male].first.should == 'Antoine'
+    end
+
+    it 'should allow replacing an entry' do
+      Acapela::Voice.map[:en][:male].first.should == 'Kenny'
+      Acapela::Voice.override_map(:en => {:male => ['Johnny']})
+      Acapela::Voice.map[:en][:male].should == ['Johnny']
+      Acapela::Voice.map[:en][:female].first.should == 'Tracy'
+    end
+
+    it 'should allow adding an entry' do
+      Acapela::Voice.map[:is].should be_nil
+      Acapela::Voice.override_map(:is => {:male => ['Birkir'], :female => ['Harpa']})
+      Acapela::Voice.map[:is][:male].first.should == 'Birkir'
+      Acapela::Voice.map[:is][:female].first.should == 'Harpa'
+    end
+  end
 end

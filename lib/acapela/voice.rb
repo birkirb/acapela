@@ -29,13 +29,51 @@ module Acapela
       @quality = QUALITY_HIGH
     end
 
-    def self.extract_from_options(options)
+    def self.override_map(override_voice_map = {})
+      current_map = self.map
+      override_voice_map.each do |language, voices|
+        language_sym = language.to_sym
+        if voices.nil?
+          # Remove voice directive.
+          current_map.delete(language_sym)
+        elsif voices.is_a?(String) || voices.is_a?(Symbol)
+          # Map voice directive.
+          current_map[language_sym] = self.map[voices]
+        elsif voices.is_a?(Hash)
+          # Replace/Override
+          if entry = self.map[language_sym]
+            new_entry = entry.dup
+          else
+            new_entry = Hash.new
+          end
+
+          voices.each do |gender, speakers|
+            if gender.is_a?(Symbol) && speakers.is_a?(Array)
+              new_entry[gender] = speakers
+            end
+          end
+          current_map[language_sym] = new_entry
+        end
+      end
+      @@map = current_map
+    end
+
+    def self.map
+      reset_map unless defined?(@@map)
+      @@map
+    end
+
+    def self.reset_map
+      @@map = Voices::PER_LANGUAGE.dup
+    end
+
+    def self.extract_from_options(options = {})
       if speaker = options[:speaker]
         named_voice(speaker)
       else
-        language = options[:language] || 'en'
+        language = options[:language] || :en
         gender = options[:gender]
-        speakers_for_language = Voices::PER_LANGUAGE[options[:language]]
+        speakers_for_language = self.map[language]
 
         speakers = case gender
         when GENDER_FEMALE
@@ -58,7 +96,7 @@ module Acapela
     def self.named_voice(speaker)
       unless defined?(@@voices)
         @@voices = Hash.new
-        Voices::PER_LANGUAGE.each do |language, voices|
+        self.map.each do |language, voices|
           [GENDER_MALE, GENDER_FEMALE].each do |gender|
             voices[gender].each do |name|
               downcase_name = name.downcase.to_sym

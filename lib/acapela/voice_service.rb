@@ -3,7 +3,6 @@ require 'net/http'
 module Acapela
   class VoiceService
 
-
     CLIENT_ENVIRONMENT = "RUBY_#{RUBY_VERSION}"
 
     ERROR_MISSING_CONFIG = Error.new("VoiceService requires configuration.")
