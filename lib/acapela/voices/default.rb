@@ -1,0 +1,40 @@
+module Acapela
+  module Voices
+    PER_LANGUAGE = {
+      :ar      =>  {:female=>["Salma", "Leila"], :male=>["Mehdi", "Nizar"]},
+      :ca      =>  {:female=>["Laia"], :male=>[]},
+      :cs      =>  {:female=>["Eliska"], :male=>[]},
+      :da      =>  {:female=>["Mette"], :male=>["Rasmus"]},
+      :de      =>  {:female=>["Julia", "Sarah"], :male=>["Andreas", "Klaus"]},
+      :el      =>  {:female=>[], :male=>["Dimitris"]},
+      :en      =>  {:female=>["Deepa", "QueenElizabeth", "Tracy", "Nelly", "Laura", "Heather", "Rachel", "Lucy"], :male=>["Kenny", "Micah", "Peter", "Nizareng", "Saul", "Graham", "Ryan"]},
+      :en_GB   =>  {:female=>["QueenElizabeth", "Rachel", "Lucy"], :male=>["Peter", "Nizareng", "Graham"]},
+      :en_IN   =>  {:female=>["Deepa"], :male=>[]},
+      :en_US   =>  {:female=>["Tracy", "Nelly", "Laura", "Heather"], :male=>["Kenny", "Micah", "Saul", "Ryan"]},
+      :es      =>  {:female=>["Rosa", "Maria", "Ines"], :male=>["Antonio"]},
+      :es_ES   =>  {:female=>["Maria", "Ines"], :male=>["Antonio"]},
+      :es_US   =>  {:female=>["Rosa"], :male=>[]},
+      :fi      =>  {:female=>["Sanna"], :male=>[]},
+      :fr      =>  {:female=>["Alice", "Justine", "Louise", "Claire", "Julie", "Margaux"], :male=>["Antoine", "Bruno"]},
+      :fr_BE   =>  {:female=>["Justine"], :male=>[]},
+      :fr_CA   =>  {:female=>["Louise"], :male=>[]},
+      :fr_FR   =>  {:female=>["Alice", "Claire", "Julie", "Margaux"], :male=>["Antoine", "Bruno"]},
+      :gb      =>  {:female=>[], :male=>["Kal"]},
+      :it      =>  {:female=>["chiara", "Chiara", "fabiana", "Fabiana"], :male=>["vittorio", "Vittorio"]},
+      :nl      =>  {:female=>["Zoe", "Femke", "Sofie", "Jasmijn"], :male=>["Daan", "Jeroen", "Max"]},
+      :nl_BE   =>  {:female=>["Zoe", "Sofie"], :male=>["Jeroen"]},
+      :nl_NL   =>  {:female=>["Femke", "Jasmijn"], :male=>["Daan", "Max"]},
+      :no      =>  {:female=>["Kari", "Bente"], :male=>["Olav"]},
+      :pl      =>  {:female=>["Ania"], :male=>[]},
+      :pt      =>  {:female=>["Celia", "Marcia"], :male=>[]},
+      :pt_BR   =>  {:female=>["Marcia"], :male=>[]},
+      :pt_PT   =>  {:female=>["Celia"], :male=>[]},
+      :ru      =>  {:female=>["Alyona"], :male=>[]},
+      :sc      =>  {:female=>["Mia"], :male=>[]},
+      :sv      =>  {:female=>["Elin", "Emma"], :male=>["Samuel", "Emil", "Erik"]},
+      :sv_FI   =>  {:female=>[], :male=>["Samuel"]},
+      :sv_SE   =>  {:female=>["Elin", "Emma"], :male=>["Emil", "Erik"]},
+      :tr      =>  {:female=>["Ipek"], :male=>[]}
+    }
+  end
+end

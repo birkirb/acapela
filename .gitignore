@@ -1,0 +1,6 @@
+config/
+vendor/
+Gemfile.lock
+tmp/
+script/voice_enumerator.out
+script/php_code.txt
