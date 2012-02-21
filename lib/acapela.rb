@@ -1,3 +1,7 @@
+require "rubygems"
+require "bundler"
+Bundler.require(:default)
+
 require 'acapela/error'
 require 'acapela/config'
 require 'acapela/voices/default'
@@ -5,10 +9,6 @@ require 'acapela/voice'
 require 'acapela/constants'
 require 'acapela/response'
 require 'acapela/voice_service'
-
-if RUBY_VERSION < "1.9"
-  require 'backports'
-end
 
 module Acapela
 

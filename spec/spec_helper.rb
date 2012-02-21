@@ -22,15 +22,26 @@ end
 create_missing_config_file
 
 require File.join(File.dirname(__FILE__), '..', 'init')
-require 'mocha'
+Bundler.require(:test)
+
+
+def silence_warnings
+  begin
+    old_verbose, $VERBOSE = $VERBOSE, nil
+    yield
+  ensure
+    $VERBOSE = old_verbose
+  end
+end
 
 # Some test voices.
-
-Acapela::Voices::PER_LANGUAGE = {
-  :en      =>  {:female=>["Tracy", "Heather"], :male=>["Kenny"]},
-  :es      =>  {:female=>["Rosa"], :male=>[]},
-  :fr      =>  {:female=>[], :male=>["Antoine", "Bruno"]},
-}
+silence_warnings do
+  Acapela::Voices::PER_LANGUAGE = {
+    :en      =>  {:female=>["Tracy", "Heather"], :male=>["Kenny"]},
+    :es      =>  {:female=>["Rosa"], :male=>[]},
+    :fr      =>  {:female=>[], :male=>["Antoine", "Bruno"]},
+  }
+end
 
 EXAMPLE_ACAPELA_RESPONSE_ACCESS_DENIED = "res=NOK&err_code=ACCESS_DENIED_ERROR&err_msg=Invalid%20identifiers&w=&create_echo="
 EXAMPLE_ACAPELA_RESPONSE_INVALID_PARAM = "res=NOK&err_code=INVALID_PARAM_ERROR&err_msg=This%20voice%20is%20not%20available&w=&create_echo="
