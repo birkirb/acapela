@@ -2,7 +2,7 @@ require 'uri'
 
 module Acapela
 
-  VERSION = "0.8.0"
+  VERSION = "0.8.1"
 
   class Voice
     QUALITY_LOW = '8k'
