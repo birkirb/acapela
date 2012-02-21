@@ -22,7 +22,8 @@ end
 create_missing_config_file
 
 require File.join(File.dirname(__FILE__), '..', 'init')
-Bundler.require(:test)
+require 'bundler'
+Bundler.require(:development)
 
 
 def silence_warnings
