@@ -6,6 +6,10 @@ describe Acapela::VoiceService do
   mock_service = true
   if mock_service
     require 'acapela/mocks/voice_service'
+
+    after(:each) do
+      Acapela::VoiceService.expect_ok_response
+    end
   end
 
   context 'When create without parameters' do
@@ -17,7 +21,6 @@ describe Acapela::VoiceService do
     end
 
     it 'should allow generation of MP3 sound' do
-      service.expect_ok_response if mock_service
       sound_url = service.generate_sound(text_string, :language => :en)
       sound_url.should be_kind_of(Acapela::Response)
     end
@@ -33,7 +36,7 @@ describe Acapela::VoiceService do
     service = Acapela::VoiceService.new(Acapela::Config.read(test_config))
 
     it 'should raise the reported access error' do
-       service.expect_access_denied_response if mock_service
+       Acapela::VoiceService.expect_access_denied_response if mock_service
        expect do
          service.generate_sound(text_string, :language => :en)
        end.to raise_error(Acapela::ServiceError, "Code: ACCESS_DENIED_ERROR, Message: Invalid identifiers")
@@ -45,7 +48,7 @@ describe Acapela::VoiceService do
       service = Acapela::VoiceService.new
       if mock_service
         service.generate_sound(text_string, :speaker => 'tracy', :quality => :low)
-        service.posted_params[:req_voice].should == 'tracy8k'
+        Acapela::VoiceService.last_posted_params[:req_voice].should == 'tracy8k'
       else
         pending("Without mock, the returned file quality needs to be confirmed")
       end
@@ -56,7 +59,7 @@ describe Acapela::VoiceService do
       if mock_service
         voice = Acapela::Voice.new('johnny', :male, 'en')
         service.generate_with_voice(text_string, voice)
-        service.posted_params[:req_voice].should == 'johnny22k'
+        Acapela::VoiceService.last_posted_params[:req_voice].should == 'johnny22k'
       else
         pending("Without mock, the returned file quality needs to be confirmed")
       end

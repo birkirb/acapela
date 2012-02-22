@@ -1,28 +1,35 @@
-require 'acapela/mocks/constants'
-
 module Acapela
   class VoiceService
     include Acapela::Mocks
 
-    attr_accessor :expected_response, :posted_params
+    @@expected_response = EXAMPLE_ACAPELA_RESPONSE_OK
+    @@last_posted_params = nil
 
-    def expect_ok_response
-      @expected_response = EXAMPLE_ACAPELA_RESPONSE_OK
+    def self.expected_response
+      @@expected_response
     end
 
-    def expect_invalid_param_response
-      @expected_response = EXAMPLE_ACAPELA_RESPONSE_INVALID_PARAM
+    def self.last_posted_params
+      @@last_posted_params
     end
 
-    def expect_access_denied_response
-      @expected_response = EXAMPLE_ACAPELA_RESPONSE_ACCESS_DENIED
+    def self.expect_ok_response
+      @@expected_response = EXAMPLE_ACAPELA_RESPONSE_OK
+    end
+
+    def self.expect_invalid_param_response
+      @@expected_response = EXAMPLE_ACAPELA_RESPONSE_INVALID_PARAM
+    end
+
+    def self.expect_access_denied_response
+      @@expected_response = EXAMPLE_ACAPELA_RESPONSE_ACCESS_DENIED
     end
 
     private
 
     def post(params)
-      @posted_params = params
-      @expected_response || EXAMPLE_ACAPELA_RESPONSE_OK
+      @@last_posted_params = params
+      self.class.expected_response
     end
 
   end

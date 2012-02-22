@@ -1,17 +1,11 @@
 require 'spec_helper'
 require 'cgi'
 
-EXPECTED_FILE_CONTENT = <<-FILE
-<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
-<html><head>
-<title>302 Found</title>
-</head><body>
-<h1>Found</h1>
-<p>This is pretending to be an MP3 file.</p>
-</body></html>
-FILE
-
 describe Acapela::Response do
+
+  after(:each) do
+    Acapela::Response.mock_on
+  end
 
   it 'should throw an error when created with bogus parameters' do
     expect do
@@ -32,17 +26,17 @@ describe Acapela::Response do
 
   it 'should download and return a tempfile with the object from the response url' do
     response = Acapela::Response.new(Acapela::Mocks::EXAMPLE_ACAPELA_RESPONSE_OK)
-    response.expects(:fetch_file_from_url).returns(EXPECTED_FILE_CONTENT)
 
     file = response.download_to_tempfile
     file.should be_kind_of(Tempfile)
     file.rewind
     contents = file.read
     file.close
-    contents.should == EXPECTED_FILE_CONTENT
+    contents.should == File.read(Acapela::Mocks::RESPONSE_TEST_FILE)
   end
 
   it 'should raise an error when file download fails with non 200 response' do
+    Acapela::Response.mock_off # Returns the test file contents.
     response = Acapela::Response.new(Acapela::Mocks::EXAMPLE_ACAPELA_RESPONSE_OK)
     Net::HTTP.expects(:get_response).returns(Net::HTTPNotFound.new("Body?", 404, "Something went wrong."))
     expect do

@@ -24,7 +24,7 @@ create_missing_config_file
 require File.join(File.dirname(__FILE__), '..', 'init')
 require 'bundler'
 Bundler.require(:development)
-require 'acapela/mocks/constants'
+require 'acapela/mocks'
 
 def silence_warnings
   begin
