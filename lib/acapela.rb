@@ -12,10 +12,16 @@ end
 
 module Acapela
 
-  @@config = Acapela::Config.read rescue nil
-
   def self.config
-    @@config
+    @@config ||= Acapela::Config.read rescue nil
+  end
+
+  def self.config=(config)
+    if config.is_a?(Acapela::Config)
+      @@config = config
+    else
+      raise Error.new("Acapela configuration required. Not #{config.class}")
+    end
   end
 
 end
