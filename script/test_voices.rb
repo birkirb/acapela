@@ -1,5 +1,10 @@
 # Encoding: UTF-8
 
+trap("SIGINT") do
+  puts "Stopping..."
+  @interrupted = true
+end
+
 SAMPLE_SENTENCES = {
   :ar      =>  "اسمي {name} وأنا أتكلم يمكن.", # Arabic (Saudi Arabia)
   :ca      =>  "El meu nom és {name} i que pot parlar.", # Catalan (Spain)
@@ -65,6 +70,8 @@ Acapela::Voices::PER_LANGUAGE.each do |language, voice_gender|
       rescue => err
         puts "FAILED WITH: #{language}, #{gender}, #{speakers.inspect}, #{speaker}\nReason: #{err.message}"
       end
+
+      exit 0 if @interrupted
     end
   end
 end
