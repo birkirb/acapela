@@ -20,7 +20,7 @@ describe Acapela::Response do
   end
 
   it 'should report sound related stats' do
-    response = Acapela::Response.new(EXAMPLE_ACAPELA_RESPONSE_OK)
+    response = Acapela::Response.new(Acapela::Mocks::EXAMPLE_ACAPELA_RESPONSE_OK)
     response.url.should be_kind_of(URI)
     response.time.should be_kind_of(Float)
     response.size.should be_kind_of(Integer)
@@ -31,7 +31,7 @@ describe Acapela::Response do
   end
 
   it 'should download and return a tempfile with the object from the response url' do
-    response = Acapela::Response.new(EXAMPLE_ACAPELA_RESPONSE_OK)
+    response = Acapela::Response.new(Acapela::Mocks::EXAMPLE_ACAPELA_RESPONSE_OK)
     response.expects(:fetch_file_from_url).returns(EXPECTED_FILE_CONTENT)
 
     file = response.download_to_tempfile
@@ -43,7 +43,7 @@ describe Acapela::Response do
   end
 
   it 'should raise an error when file download fails with non 200 response' do
-    response = Acapela::Response.new(EXAMPLE_ACAPELA_RESPONSE_OK)
+    response = Acapela::Response.new(Acapela::Mocks::EXAMPLE_ACAPELA_RESPONSE_OK)
     Net::HTTP.expects(:get_response).returns(Net::HTTPNotFound.new("Body?", 404, "Something went wrong."))
     expect do
       response.download_to_tempfile
